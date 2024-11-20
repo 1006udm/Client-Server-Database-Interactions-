@@ -1,0 +1,40 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2706
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 @startuml\
+[*] --> Disconnect\
+\
+Disconnect --> Disconnect: Connect(Wrong IP)\
+Disconnect --> Connected_LoggedOut: Correct IP\
+Connected_LoggedOut --> long1\
+long1 --> Connected_LoggedOut\
+\
+Connected_LoggedOut --> Connected_LoggedIn : Logged in [Valid Info]\
+Connected_LoggedIn --> Connected_LoggedOut : Logging out\
+\
+Connected_LoggedIn --> InvalidInfo_One : Log in attempt [invalid info]\
+InvalidInfo_One --> InvalidInfo_Two :Log in attempt [invalid info]\
+\
+InvalidInfo_Two --> LockedOut : Log in attempt [invalid info]\
+InvalidInfo_One --> Connected_LoggedIn : Log in attempt [valid info]\
+InvalidInfo_Two --> Connected_LoggedIn : Log in attempt [valid]\
+Connected_LoggedOut --> PasswordRecovery : Password Recovery Attempt\
+PasswordRecovery --> PasswordRecovery : E-mail generated [valid username]\
+Connected_LoggedIn --> [*] : Shutdown/Log Out, Disconnect\
+\
+LockedOut --> Connected_LoggedOut\
+\
+state "Registration" as long1\
+  long1 : //entry check username \\n\\ check password \\n\\ check email\
+\
+\
+\
+LoggedOut --> Disconnect\
+Disconnect --> [*] : Shutdown\
+\
+@enduml\
+}
